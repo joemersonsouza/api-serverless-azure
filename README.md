@@ -1,4 +1,4 @@
-## Cazoo Challenge by Joemerson Souza
+## Simple API and UI using serverless
 
 For this challenge are expected on the frontend the following behaviors:
 
