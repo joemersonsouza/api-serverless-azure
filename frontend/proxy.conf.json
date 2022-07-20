@@ -1,0 +1,20 @@
+{
+  "/search*": {
+    "target":"http://azure-function:80/api",
+    "secure":false,
+    "logLevel":"debug",
+    "changeOrigin": true
+  },
+  "/create*": {
+    "target":"http://azure-function:80/api",
+    "secure":false,
+    "logLevel":"debug",
+    "changeOrigin": true
+  },
+  "/change/*": {
+    "target":"http://azure-function:80/api",
+    "secure":false,
+    "logLevel":"debug",
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,59 @@
+version: '3.7'
+
+services:
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+        - database-data:/data/db
+
+  mongo-express:
+    container_name: express
+    image: mongo-express
+    ports:
+      - '8081:8081'
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: cazoo
+      ME_CONFIG_BASICAUTH_PASSWORD: cazoo2021!
+      ME_CONFIG_MONGODB_PORT: 27017
+    external_links:
+      - mongo
+    depends_on:
+      - mongo
+
+  azure-function:
+    container_name: azure-function
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      - MONGO_URL=${MONGO_URL}
+    ports:
+      - '7071:80'
+    external_links:
+      - mongo
+    depends_on: 
+      - mongo
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    restart: always
+    external_links:
+      - azure-function
+    depends_on:
+      - azure-function
+
+volumes:
+    database-data:
+        driver: local
